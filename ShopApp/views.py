@@ -1,14 +1,21 @@
-from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView
-from .models import Product
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, DetailView, ListView
+from .models import Product, News
 
 
-class Index(TemplateView):
+class Index(ListView):
+    model = Product
     template_name = 'ShopApp/index.html'
 
 
 class DetailProduct(DetailView):
     model = Product
-    # slug_field = 'product'
     template_name = 'ShopApp/product-detail.html'
+
+
+def Newsletter(request):
+    if request.method == 'POST':
+        p = News(email=request.POST['email'])
+        p.save()
+        return redirect('index')

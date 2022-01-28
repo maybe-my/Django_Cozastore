@@ -1,6 +1,19 @@
 from django.db import models
 
+
 # Create your models here.
+
+class News(models.Model):
+    email = models.EmailField(max_length=200, db_index=True, unique=True)
+
+    class Meta:
+        ordering = ('email',)
+        verbose_name = 'Email'
+        verbose_name_plural = 'Emails'
+
+    def __str__(self):
+        return self.email
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True, unique=True)
