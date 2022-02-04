@@ -1,5 +1,6 @@
 <!-- Cart -->
 {% load static %}
+
 <div class="wrap-header-cart js-panel-cart">
     <div class="s-full js-hide-cart"></div>
 
@@ -40,7 +41,7 @@
 
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40">
-                    Total: ${{ cart.get_total_price }}
+                    Total: ${{ cart.get_total_price_shipping }}
                 </div>
 
                 <div class="header-cart-buttons flex-w w-full">
