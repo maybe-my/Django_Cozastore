@@ -9,11 +9,11 @@ from CartApp.forms import CartAddProductForm
 def Index(request):
     cart = Cart(request)
     form = CartAddProductForm
-    tovars = Product.objects.all()
+    tovars_all = Product.objects.all()[:16]
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
                                                                    'update': True})
-    return render(request, 'ShopApp/index.html', {'cart': cart, 'form': form, 'product_list': tovars})
+    return render(request, 'ShopApp/index.html', {'cart': cart, 'form': form, 'product_list': tovars_all})
 
 
 class DetailProduct(DetailView):
