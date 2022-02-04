@@ -1,17 +1,30 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, DetailView, ListView
 from .models import Product, News
+from CartApp.cart import Cart
+from CartApp.forms import CartAddProductForm
 
 
-class Index(ListView):
-    model = Product
-    template_name = 'ShopApp/index.html'
+def Index(request):
+    cart = Cart(request)
+    form = CartAddProductForm
+    tovars = Product.objects.all()
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
+                                                                   'update': True})
+    return render(request, 'ShopApp/index.html', {'cart': cart, 'form': form, 'product_list': tovars})
 
 
 class DetailProduct(DetailView):
     model = Product
     template_name = 'ShopApp/product-detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailProduct, self).get_context_data(**kwargs)
+        context['form'] = CartAddProductForm
+
+        return context
 
 
 def Newsletter(request):
