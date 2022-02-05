@@ -39,7 +39,7 @@ class ProductsResource(resources.ModelResource):
 @admin.register(Product)
 class ProductsResource(ImportExportActionModelAdmin):
     resource_class = ProductsResource
-    list_display = ['id', 'customer_link', 'image_show', 'price', 'available', 'created']
+    list_display = ['id', 'tovar_name', 'image_show', 'price', 'category', 'available', 'created']
     list_filter = ['available', 'created', 'updated']
     prepopulated_fields = {'slug': ('name',)}
 
@@ -48,11 +48,10 @@ class ProductsResource(ImportExportActionModelAdmin):
             return mark_safe("<img src='{}' width='60' />".format(obj.image.url))
         return "None"
 
-    def customer_link(self, obj):
+    def tovar_name(self, obj):
         if obj.name:
             return mark_safe("<a href='{0}' style='color: white'>{1}</a>".format(obj.id, obj.name))
         else:
             return "hi"
 
-    customer_link.allow_tags = True
     image_show.__name__ = "Image"
