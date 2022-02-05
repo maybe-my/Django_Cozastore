@@ -47,8 +47,23 @@ class ProductList(ListView):
         return context
 
 
-def Newsletter(request):
-    if request.method == 'POST':
-        p = News(email=request.POST['email'])
-        p.save()
-        return redirect('index')
+class About(ListView):
+    model = Product
+    template_name = 'ShopApp/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(About, self).get_context_data(**kwargs)
+        context['cart'] = get_cart(self.request)
+
+        return context
+
+
+class Contact(ListView):
+    model = Product
+    template_name = 'ShopApp/contact.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Contact, self).get_context_data(**kwargs)
+        context['cart'] = get_cart(self.request)
+
+        return context
