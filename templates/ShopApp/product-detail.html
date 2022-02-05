@@ -1,6 +1,8 @@
 {% extends 'ShopApp/include/base.html' %}
 {% load static %}
-{% block cart_len %} {{ cart.get_count_tovars }} {% endblock %}
+{% block title %}
+{{ object.name }}
+{% endblock %}
 {% block content %}
 
     <!-- breadcrumb -->
