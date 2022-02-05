@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ShopApp',
     'CartApp',
     'OrdersApp',
+    'BlogApp',
 ]
 
 MIDDLEWARE = [
