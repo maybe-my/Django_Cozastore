@@ -6,14 +6,22 @@ from CartApp.cart import Cart
 from CartApp.forms import CartAddProductForm
 
 
-def Index(request):
-    cart = Cart(request)
-    form = CartAddProductForm
-    tovars_all = Product.objects.all()[:16]
+def get_cart(requests):
+    cart = Cart(requests)
     for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
-                                                                   'update': True})
-    return render(request, 'ShopApp/index.html', {'cart': cart, 'form': form, 'product_list': tovars_all})
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+    return cart
+
+
+class Index(ListView):
+    model = Product
+    template_name = 'ShopApp/index.html'
+    queryset = Product.objects.all()[:16]
+
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        context['cart'] = get_cart(self.request)
+        return context
 
 
 class DetailProduct(DetailView):
@@ -22,7 +30,19 @@ class DetailProduct(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailProduct, self).get_context_data(**kwargs)
+        context['cart'] = get_cart(self.request)
         context['form'] = CartAddProductForm
+        return context
+
+
+class ProductList(ListView):
+    model = Product
+    queryset = Product.objects.all()[:16]
+    template_name = 'ShopApp/product.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductList, self).get_context_data(**kwargs)
+        context['cart'] = get_cart(self.request)
 
         return context
 

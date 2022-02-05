@@ -94,7 +94,7 @@
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="{% url 'products_list' %}">Shop</a>
 							</li>
 
 							<li class="label1" data-label1="hot">
@@ -121,7 +121,7 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{% block cart_len %} {% endblock %}">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{ cart.get_count_tovars }}">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
@@ -245,6 +245,8 @@
 			</div>
 		</div>
 	</header>
+
+    {% include 'ShopApp/include/cart.html' %}
 
 	{% block content %}
 	
