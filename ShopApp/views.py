@@ -1,9 +1,8 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.views.generic import TemplateView, DetailView, ListView
-from .models import Product, News
+from django.views.generic import DetailView, ListView
+from .models import Product
 from CartApp.cart import Cart
 from CartApp.forms import CartAddProductForm
+from django.db.models import Q
 
 
 def get_cart(requests):
@@ -18,11 +17,6 @@ class Index(ListView):
     template_name = 'ShopApp/index.html'
     queryset = Product.objects.all()[:16]
 
-    def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
-        # context['cart'] = get_cart(self.request)
-        return context
-
 
 class DetailProduct(DetailView):
     model = Product
@@ -30,7 +24,6 @@ class DetailProduct(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailProduct, self).get_context_data(**kwargs)
-        context['cart'] = get_cart(self.request)
         context['form'] = CartAddProductForm
         return context
 
@@ -40,30 +33,23 @@ class ProductList(ListView):
     queryset = Product.objects.all()[:16]
     template_name = 'ShopApp/product.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ProductList, self).get_context_data(**kwargs)
-        context['cart'] = get_cart(self.request)
 
-        return context
+class SearchProduct(ListView):
+    model = Product
+    template_name = 'ShopApp/product.html'
+
+    def get_queryset(self):
+        print(self.request.GET)
+        return Product.objects.filter(
+            Q(name__icontains=self.request.GET['search']) | Q(category__name__icontains=self.request.GET['search'])
+        )
 
 
 class About(ListView):
     model = Product
     template_name = 'ShopApp/about.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(About, self).get_context_data(**kwargs)
-        context['cart'] = get_cart(self.request)
-
-        return context
-
 
 class Contact(ListView):
     model = Product
     template_name = 'ShopApp/contact.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(Contact, self).get_context_data(**kwargs)
-        context['cart'] = get_cart(self.request)
-
-        return context

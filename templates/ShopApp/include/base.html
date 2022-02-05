@@ -85,7 +85,7 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.html">Home</a>
+								<a href="{% url 'index' %}">Home</a>
 								<ul class="sub-menu">
 									<li><a href="index.html">Homepage 1</a></li>
 									<li><a href="home-02.html">Homepage 2</a></li>
@@ -137,7 +137,7 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="index.html"><img src="{% static 'images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
+				<a href="{% url 'index' %}"><img src="{% static 'images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -196,7 +196,7 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="{% url 'index' %}">Home</a>
 					<ul class="sub-menu-m">
 						<li><a href="index.html">Homepage 1</a></li>
 						<li><a href="home-02.html">Homepage 2</a></li>
@@ -208,11 +208,11 @@
 				</li>
 
 				<li>
-					<a href="product.html">Shop</a>
+					<a href="{% url 'products_list' %}">Shop</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+					<a href="{% url 'CartApp:cart_detail' %}" class="label1 rs1" data-label1="hot">Features</a>
 				</li>
 
 				<li>
@@ -220,11 +220,11 @@
 				</li>
 
 				<li>
-					<a href="about.html">About</a>
+					<a href="{% url 'about' %}">About</a>
 				</li>
 
 				<li>
-					<a href="contact.html">Contact</a>
+					<a href="{% url 'contact' %}">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -236,7 +236,7 @@
 					<img src="{% static 'images/icons/icon-close2.png' %}" alt="CLOSE">
 				</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
+				<form class="wrap-search-header flex-w p-l-15" method="get" action="{% url 'search_product' %}">
 					<button class="flex-c-m trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>

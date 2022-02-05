@@ -4,6 +4,7 @@ from django.urls import path, include
 from . import views
 urlpatterns = [
     path('', views.Index.as_view(), name='index'),
+    path('search/', views.SearchProduct.as_view(), name='search_product'),
     path('order/', include('OrdersApp.urls')),
     path('products/', views.ProductList.as_view(), name='products_list'),
     path('detail/<slug>', views.DetailProduct.as_view(), name='detail_product'),
