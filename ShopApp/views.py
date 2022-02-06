@@ -15,7 +15,7 @@ def get_cart(requests):
 class Index(ListView):
     model = Product
     template_name = 'ShopApp/index.html'
-    queryset = Product.objects.all()[:16]
+    queryset = Product.objects.filter(available=True)[:16]
 
 
 class DetailProduct(DetailView):
@@ -30,7 +30,7 @@ class DetailProduct(DetailView):
 
 class ProductList(ListView):
     model = Product
-    queryset = Product.objects.all()[:16]
+    queryset = Product.objects.filter(available=True)[:16]
     template_name = 'ShopApp/product.html'
 
 
@@ -39,9 +39,9 @@ class SearchProduct(ListView):
     template_name = 'ShopApp/product.html'
 
     def get_queryset(self):
-        print(self.request.GET)
         return Product.objects.filter(
-            Q(name__icontains=self.request.GET['search']) | Q(category__name__icontains=self.request.GET['search'])
+            Q(name__icontains=self.request.GET['search'], available=True) |
+            Q(category__name__icontains=self.request.GET['search'], available=True)
         )
 
 
