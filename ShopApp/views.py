@@ -1,15 +1,7 @@
 from django.views.generic import DetailView, ListView
 from .models import Product
-from CartApp.cart import Cart
 from CartApp.forms import CartAddProductForm
 from django.db.models import Q
-
-
-def get_cart(requests):
-    cart = Cart(requests)
-    for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
-    return cart
 
 
 class Index(ListView):
